@@ -1,4 +1,5 @@
 import express from "express";
+import "dotenv/config";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -11,14 +12,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-mongoose
-  .connect("mongodb://127.0.0.1:27017/loginDB")
-  .then(() => {
-    console.log("MongoDB connected");
-  })
-  .catch((err) => {
-    console.log("MongoDB connection error:", err);
-  });
+mongoose .connect(process.env.MONGODB_URI) .then(() => { console.log("MongoDB Atlas connected"); }) .catch((err) => { console.log("MongoDB connection error:", err); });
 // Home page
 app.get("/", function (req, res) {
   res.sendFile(path.join(__dirname, "index.html"));
